@@ -13,6 +13,8 @@ call plug#end()
 
 syntax enable
 
+set cursorline
+set cursorcolumn
 " set termguicolors
 set autoindent
 set autoread
@@ -74,7 +76,8 @@ let g:goyo_height = 95
 " FZF Configurations
 " let $FZF_DEFAULT_COMMAND=' (git ls-tree -r --name-only HEAD || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.8, 'border': 'sharp' } }
-let $FZF_DEFAULT_COMMAND='rg --files'
+let g:fzf_preview_window = 'down:80%'
+" let $FZF_DEFAULT_COMMAND='rg --files'
 let $FZF_DEFAULT_OPTS='--layout=reverse'
 
 " === Key Bindings ===
@@ -200,11 +203,11 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " Disable auto comment 
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=
 " FZF Preview
-command! -bang -nargs=? -complete=dir Files
-            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('down:80%'), <bang>0)
+" command! -bang -nargs=? -complete=dir Files
+"             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('down:80%'), <bang>0)
 command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --hidden --line-number --color=always --no-ignore '.shellescape(<q-args>).'| tr -d "\017"', 
             \ 0, 
-            \ fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'down:80%:noborder', '?'),
+            \ fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'down:80%', '?'),
             \ <bang>0)
 
 " " Open NERDTree on startup
