@@ -24,7 +24,7 @@ set directory=/tmp//,.
 set encoding=UTF-8
 " set fillchars+=vert:\ "█ Remove vertical split border/line
 set guicursor=
-set hlsearch!
+set hlsearch
 set incsearch " Focus search string while typing
 " set laststatus=1
 set mouse=a " Use mouse to scroll 
@@ -42,6 +42,8 @@ colorscheme PaperColor
 
 if !has('nvim')
     set clipboard=exclude:.* " Don't connect to X display
+else
+    set inccommand=nosplit " Show effect of command substitution
 endif
 
 " Disable Background Color Erase
@@ -77,10 +79,14 @@ let g:goyo_height = 95
 " let $FZF_DEFAULT_COMMAND=' (git ls-tree -r --name-only HEAD || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.8, 'border': 'sharp' } }
 let g:fzf_preview_window = 'down:80%'
-" let $FZF_DEFAULT_COMMAND='rg --files'
+let $FZF_DEFAULT_COMMAND='rg --files'
 let $FZF_DEFAULT_OPTS='--layout=reverse'
 
+
 " === Key Bindings ===
+
+nnoremap <S-Tab> gT
+nnoremap <Tab> gt
 
 " FZF
 nmap <C-P> :Files<CR>
