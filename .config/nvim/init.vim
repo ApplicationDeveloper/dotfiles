@@ -92,7 +92,9 @@ nnoremap <Tab> gt
 nmap <C-P> :Files<CR>
 
 " NERDTree
-map <silent><F7> :NERDTreeToggle<CR>
+" map <silent><F7> :NERDTreeToggle<CR>
+map <expr><F7> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
+map <silent><S-F7> :NERDTreeToggle<CR>
 
 " CoC
 inoremap <silent><expr> <TAB>
