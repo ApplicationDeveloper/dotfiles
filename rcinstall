@@ -1,5 +1,13 @@
 #!/usr/bin/env sh
-# wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+
+command -v curl
+
+if [ $? -ne 0 ]
+then
+    echo "curl is not installed. Try installing now..."
+    sudo apt install curl -y
+fi
+
 curl -fLo ~/.config/nvim/init.vim --create-dirs https://raw.githubusercontent.com/ApplicationDeveloper/dotfiles/master/.config/nvim/init.vim
 curl -fLo ~/.tmux.conf https://raw.githubusercontent.com/ApplicationDeveloper/dotfiles/master/.tmux.conf
 curl -fLo ~/.gitignore https://raw.githubusercontent.com/ApplicationDeveloper/dotfiles/master/.gitignore
@@ -16,4 +24,32 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt update
 sudo apt install yarn
 
-nvim +PlugInstall +qall
+command -v nvim
+
+if [ $? -ne 0 ]
+then
+    nvim_file=nvim.appimage
+    nvim_dir=/opt/neovim
+    
+    wget https://github.com/neovim/neovim/releases/download/nightly/$nvim_file
+    
+    chmod +x $nvim_file
+    ./$nvim_file --appimage-extract
+    
+    sudo mv squashfs-root $nvim_dir
+    sudo update-alternatives --install /usr/bin/nvim nvim $nvim_dir/AppRun 30
+
+    rm $nvim_file
+
+    command -v ripgrep
+
+    if [ $? -ne 0 ]
+    then
+        sudo apt install ripgrep -y
+    fi
+
+    nvim +PlugInstall +qall
+fi
+
+echo "Script finished."
+rm rcinstall
