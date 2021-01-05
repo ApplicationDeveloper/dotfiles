@@ -24,7 +24,7 @@ set directory=/tmp//,.
 set encoding=UTF-8
 " set fillchars+=vert:\ "█ Remove vertical split border/line
 set guicursor=
-" set hlsearch
+set hlsearch
 set incsearch " Focus search string while typing
 " set laststatus=1
 set mouse=a " Use mouse to scroll
