@@ -213,7 +213,7 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=
 " command! -bang -nargs=? -complete=dir Files
 "             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('down:80%'), <bang>0)
 command! -bang -nargs=? -complete=dir Files
-\ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview-window', 'down:80%:border:rounded', '--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+\ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview-window', 'down:80%:border:sharp', '--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
 command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --hidden --line-number --color=always --no-ignore '.shellescape(<q-args>).'| tr -d "\017"',
       \ 0,
       \ fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'down:80%', '?'),
