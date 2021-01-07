@@ -87,7 +87,7 @@ nnoremap <S-Tab> gT
 nnoremap <Tab> gt
 
 " FZF
-nmap <C-P> :Files<CR>
+nmap <C-Space> :Files<CR>
 
 " NERDTree
 " map <silent><F7> :NERDTreeToggle<CR>
