@@ -1,7 +1,7 @@
 call plug#begin('~/.config/nvim/plugged')
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } 
 Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'} 
 Plug 'preservim/nerdtree'
 " Plug 'tadaa/vimade' " Breaks fzf on Vim
 Plug 'tpope/vim-commentary'
@@ -27,7 +27,7 @@ set guicursor=
 set hlsearch
 set incsearch " Focus search string while typing
 " set laststatus=1
-set mouse=a " Use mouse to scroll
+set mouse=a " Use mouse to scroll 
 set nowrap
 set number
 set pastetoggle=<F3> " Auto indent when copy & pasting
@@ -37,9 +37,9 @@ set softtabstop=4 shiftwidth=4 expandtab
 set title
 
 if !has('nvim')
-set clipboard=exclude:.* " Don't connect to X display
+    set clipboard=exclude:.* " Don't connect to X display
 else
-set inccommand=nosplit " Show effect of command substitution
+    set inccommand=nosplit " Show effect of command substitution
 endif
 
 " Disable Background Color Erase
@@ -47,7 +47,7 @@ endif
 set t_Co=256
 
 if &term =~ '256color'
-set t_ut=
+    set t_ut=
 endif
 
 au InsertEnter * set relativenumber!
@@ -75,11 +75,24 @@ let g:goyo_height = 95
 
 " FZF Configurations
 " let $FZF_DEFAULT_COMMAND=' (git ls-tree -r --name-only HEAD || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
-let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.8, 'border': 'sharp' } }
+let g:fzf_colors = { 
+            \ 'border': ['fg', 'Title'],
+            \ 'gutter': ['bg', 'Normal']
+            \}
+let g:fzf_layout = { 'window': { 'width': 0.92, 'height': 0.8, 'border': 'sharp' } }
 let g:fzf_preview_window = 'down:80%:border:sharp'
 let $FZF_DEFAULT_COMMAND='rg --files'
 " let $FZF_DEFAULT_COMMAND='fdfind --type file --follow --hidden --exclude .git --color=always'
-let $FZF_DEFAULT_OPTS='--layout=reverse --color'
+let $FZF_DEFAULT_OPTS='--layout=reverse'
+
+" WSL yank support
+let s:clip = '/mnt/c/Windows/System32/clip.exe'  " default location
+if executable(s:clip)
+    augroup WSLYank
+        autocmd!
+        autocmd TextYankPost * call system('echo '.shellescape(join(v:event.regcontents, "\<CR>")).' | '.s:clip)
+    augroup END
+end
 
 " === Key Bindings ===
 
@@ -96,20 +109,20 @@ map <silent><S-F7> :NERDTreeToggle<CR>
 
 " CoC
 inoremap <silent><expr> <TAB>
-\ pumvisible() ? "\<C-n>" :
-\ <SID>check_back_space() ? "\<TAB>" :
-\ coc#refresh()
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-let col = col('.') - 1
-return !col || getline('.')[col - 1]  =~# '\s'
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-			  \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -125,11 +138,11 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-if (index(['vim','help'], &filetype) >= 0)
-execute 'h '.expand('<cword>')
-else
-call CocAction('doHover')
-endif
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.
@@ -143,11 +156,11 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
-autocmd!
-" Setup formatexpr specified filetype(s).
-autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-" Update signature help on jump placeholder.
-autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
 " Applying codeAction to the selected region.
@@ -206,18 +219,18 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " === Commands ===
-" Disable auto comment
+" Disable auto comment 
 "
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=
 " FZF Preview
 " command! -bang -nargs=? -complete=dir Files
 "             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('down:80%'), <bang>0)
 command! -bang -nargs=? -complete=dir Files
-\ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview-window', 'down:80%:border:sharp', '--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
-command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --hidden --line-number --color=always --no-ignore '.shellescape(<q-args>).'| tr -d "\017"',
-      \ 0,
-      \ fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'down:80%', '?'),
-      \ <bang>0)
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview-window', 'down:80%:border:sharp', '--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --hidden --line-number --color=always --no-ignore '.shellescape(<q-args>).'| tr -d "\017"', 
+            \ 0, 
+            \ fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'down:80%', '?'),
+            \ <bang>0)
 
 " " Open NERDTree on startup
 " autocmd VimEnter * NERDTree
@@ -227,24 +240,23 @@ command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --hidden --line-number
 " Close vim if NERDTree is last window
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Vue Indentation
+" Vue Indentation 
 au BufRead,BufNewFile *.vue set filetype=vue
 autocmd FileType vue setlocal shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType html setlocal shiftwidth=2 softtabstop=2 expandtab
 
 " Always center cursor
-augroup VCenterCursor
-au!
-au BufEnter,WinEnter,WinNew,VimResized *,*.*
-  \ let &scrolloff=winheight(win_getid())/2
-augroup END
-
+" augroup VCenterCursor
+"     au!
+"     au BufEnter,WinEnter,WinNew,VimResized *,*.*
+"         \ let &scrolloff=winheight(win_getid())/2
+" augroup END
 
 " highlight clear StatusLine
 " highlight clear StatusLineNC
 " highlight VertSplit cterm=None ctermbg=24
 highlight clear SignColumn
-" highlight StatusLineNC cterm=underline ctermfg=241
+" highlight StatusLineNC cterm=underline ctermfg=241 
 " highlight StatusLine cterm=underline ctermfg=241
 " highlight LineNr ctermfg=8
 highlight MatchParen ctermfg=197 ctermbg=None
