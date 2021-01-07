@@ -15,7 +15,7 @@ syntax enable
 
 set cursorline
 " set cursorcolumn
-set termguicolors
+" set termguicolors
 set autoindent
 set autoread
 set background=light
@@ -260,8 +260,7 @@ highlight clear SignColumn
 " highlight StatusLine cterm=underline ctermfg=241
 " highlight LineNr ctermfg=8
 highlight MatchParen ctermfg=197 ctermbg=None
-" highlight Normal ctermbg=None
-" highlight Normal ctermbg=15
+highlight Normal ctermbg=None
 " highlight NormalNC ctermfg=Gray
 highlight NonText ctermbg=None
 highlight CursorLineNr ctermbg=None
