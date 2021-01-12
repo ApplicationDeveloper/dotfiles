@@ -7,7 +7,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'morhetz/gruvbox'
-" Plug 'cormacrelf/vim-colors-github'
+Plug 'psliwka/vim-smoothie'
 if has('nvim')
     Plug 'tadaa/vimade' " Breaks fzf on Vim
 endif
@@ -68,7 +68,7 @@ colorscheme gruvbox
 
 " Vimade Configurations
 let g:vimade = {}
-let g:vimade.fadelevel = 0.6
+let g:vimade.fadelevel = 0.4
 let g:vimade.enablesigns = 1
 
 " Goyo Configurations
@@ -105,9 +105,8 @@ nnoremap <Tab> gt
 nmap <C-Space> :Files<CR>
 
 " NERDTree
-" map <silent><F7> :NERDTreeToggle<CR>
-map <expr><F7> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
-map <silent><S-F7> :NERDTreeToggle<CR>
+map <expr><F7> expand('%') =~ "^NERD" ? "" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
+" map <silent><S-F7> ":NERDTreeToggle<CR>"
 
 " CoC
 inoremap <silent><expr> <TAB>
