@@ -3,12 +3,14 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'} 
 Plug 'preservim/nerdtree'
-" Plug 'tadaa/vimade' " Breaks fzf on Vim
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'morhetz/gruvbox'
 " Plug 'cormacrelf/vim-colors-github'
+if has('nvim')
+    Plug 'tadaa/vimade' " Breaks fzf on Vim
+endif
 call plug#end()
 
 syntax enable
@@ -28,7 +30,7 @@ set hlsearch
 set incsearch " Focus search string while typing
 " set laststatus=1
 set mouse=a " Use mouse to scroll 
-set nowrap
+" set nowrap
 set number
 set pastetoggle=<F3> " Auto indent when copy & pasting
 set showcmd
@@ -66,7 +68,7 @@ colorscheme gruvbox
 
 " Vimade Configurations
 let g:vimade = {}
-let g:vimade.fadelevel = 0.4
+let g:vimade.fadelevel = 0.6
 let g:vimade.enablesigns = 1
 
 " Goyo Configurations
