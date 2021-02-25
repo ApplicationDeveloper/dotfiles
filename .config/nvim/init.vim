@@ -20,10 +20,10 @@ set cursorline
 " set termguicolors
 set autoindent
 set autoread
-set background=light
 set backupdir=/tmp//,. " Set swap files directory
 set directory=/tmp//,.
 set encoding=UTF-8
+set background=dark
 " set fillchars+=vert:\ "█ Remove vertical split border/line
 set guicursor=
 set hlsearch
@@ -64,11 +64,14 @@ set signcolumn=yes
 set nobackup
 set nowritebackup
 
+let g:gruvbox_contrast_dark="soft"
+" let g:gruvbox_contrast_light="hard"
 colorscheme gruvbox
+
 
 " Vimade Configurations
 let g:vimade = {}
-let g:vimade.fadelevel = 0.4
+let g:vimade.fadelevel = 0.6
 let g:vimade.enablesigns = 1
 
 " Goyo Configurations
@@ -275,7 +278,7 @@ highlight clear SignColumn
 " highlight StatusLine cterm=underline ctermfg=241
 " highlight LineNr ctermfg=8
 highlight MatchParen ctermfg=197 ctermbg=None
-highlight Normal ctermbg=None
+" highlight Normal ctermbg=None
 " highlight NormalNC ctermfg=Gray
 highlight NonText ctermbg=None
 highlight CursorLineNr ctermbg=None
