@@ -115,6 +115,12 @@ end
 :nnoremap <A-k> <C-w>k
 :nnoremap <A-l> <C-w>l
 
+nmap <A-1> 1gt
+nmap <A-2> 2gt
+nmap <A-3> 3gt
+nmap <A-4> 4gt
+nmap <A-5> 5gt
+
 " nnoremap <S-Tab> gT
 " nnoremap <Tab> gt
 
