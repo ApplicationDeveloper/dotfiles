@@ -290,6 +290,6 @@ highlight NonText ctermbg=None
 highlight CursorLineNr ctermbg=None
 highlight LineNr ctermbg=None
 " highlight Visual cterm=None
-highlight Pmenu ctermbg=Green
+" highlight Pmenu ctermbg=Green
 highlight Todo cterm=underline ctermfg=Green
 highlight EndOfBuffer cterm=None ctermfg=235 ctermbg=None
