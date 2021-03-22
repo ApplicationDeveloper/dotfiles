@@ -8,9 +8,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'morhetz/gruvbox'
 Plug 'psliwka/vim-smoothie'
-if has('nvim')
-    Plug 'tadaa/vimade' " Breaks fzf on Vim
-endif
+" if has('nvim')
+"     Plug 'tadaa/vimade' " Breaks fzf on Vim
+" endif
 call plug#end()
 
 syntax enable
@@ -42,6 +42,7 @@ if !has('nvim')
     set clipboard=exclude:.* " Don't connect to X display
 else
     set inccommand=nosplit " Show effect of command substitution
+    set clipboard+=unnamedplus
 endif
 
 " Disable Background Color Erase
@@ -65,6 +66,8 @@ set nobackup
 set nowritebackup
 
 let g:gruvbox_contrast_dark="soft"
+let g:gruvbox_bold=1
+let g:gruvbox_italic=1
 " let g:gruvbox_contrast_light="hard"
 colorscheme gruvbox
 
@@ -102,18 +105,18 @@ end
 " === Key Bindings ===
 
 " Terminal
-:tnoremap <A-h> <C-\><C-N><C-w>h
-:tnoremap <A-j> <C-\><C-N><C-w>j
-:tnoremap <A-k> <C-\><C-N><C-w>k
-:tnoremap <A-l> <C-\><C-N><C-w>l
-:inoremap <A-h> <C-\><C-N><C-w>h
-:inoremap <A-j> <C-\><C-N><C-w>j
-:inoremap <A-k> <C-\><C-N><C-w>k
-:inoremap <A-l> <C-\><C-N><C-w>l
-:nnoremap <A-h> <C-w>h
-:nnoremap <A-j> <C-w>j
-:nnoremap <A-k> <C-w>k
-:nnoremap <A-l> <C-w>l
+" :tnoremap <A-h> <C-\><C-N><C-w>h
+" :tnoremap <A-j> <C-\><C-N><C-w>j
+" :tnoremap <A-k> <C-\><C-N><C-w>k
+" :tnoremap <A-l> <C-\><C-N><C-w>l
+" :inoremap <A-h> <C-\><C-N><C-w>h
+" :inoremap <A-j> <C-\><C-N><C-w>j
+" :inoremap <A-k> <C-\><C-N><C-w>k
+" :inoremap <A-l> <C-\><C-N><C-w>l
+" :nnoremap <A-h> <C-w>h
+" :nnoremap <A-j> <C-w>j
+" :nnoremap <A-k> <C-w>k
+" :nnoremap <A-l> <C-w>l
 
 nmap <A-1> 1gt
 nmap <A-2> 2gt
@@ -284,12 +287,12 @@ highlight clear SignColumn
 " highlight StatusLine cterm=underline ctermfg=241
 " highlight LineNr ctermfg=8
 highlight MatchParen ctermfg=197 ctermbg=None
-" highlight Normal ctermbg=None
+highlight Normal ctermbg=None
 " highlight NormalNC ctermfg=Gray
 highlight NonText ctermbg=None
 highlight CursorLineNr ctermbg=None
 highlight LineNr ctermbg=None
 " highlight Visual cterm=None
 " highlight Pmenu ctermbg=Green
-highlight Todo cterm=underline ctermfg=Green
+" highlight Todo cterm=underline ctermfg=Green
 highlight EndOfBuffer cterm=None ctermfg=235 ctermbg=None
