@@ -15,7 +15,7 @@ call plug#end()
 
 syntax enable
 
-set cursorline
+" set cursorline
 " set cursorcolumn
 " set termguicolors
 set autoindent
@@ -26,7 +26,7 @@ set encoding=UTF-8
 set background=dark
 " set fillchars+=vert:\ "█ Remove vertical split border/line
 set guicursor=
-set hlsearch
+set nohlsearch
 set incsearch " Focus search string while typing
 " set laststatus=1
 set mouse=a " Use mouse to scroll 
