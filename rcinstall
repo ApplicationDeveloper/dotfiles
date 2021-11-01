@@ -1,55 +1,104 @@
 #!/usr/bin/env sh
 
-command -v curl
+LOG_FILE=rcinstall.log
 
-if [ $? -ne 0 ]
-then
-    echo "curl is not installed. Try installing now..."
-    sudo apt install curl -y
-fi
+download_config() {
+	curl -fLo ~/.config/nvim/init.vim --create-dirs https://raw.githubusercontent.com/ApplicationDeveloper/dotfiles/master/.config/nvim/init.vim
+	curl -fLo ~/.tmux.conf https://raw.githubusercontent.com/ApplicationDeveloper/dotfiles/master/.tmux.conf
+	curl -fLo ~/.gitignore https://raw.githubusercontent.com/ApplicationDeveloper/dotfiles/master/.gitignore
 
-curl -fLo ~/.config/nvim/init.vim --create-dirs https://raw.githubusercontent.com/ApplicationDeveloper/dotfiles/master/.config/nvim/init.vim
-curl -fLo ~/.tmux.conf https://raw.githubusercontent.com/ApplicationDeveloper/dotfiles/master/.tmux.conf
-curl -fLo ~/.gitignore https://raw.githubusercontent.com/ApplicationDeveloper/dotfiles/master/.gitignore
+	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+		       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-               https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+	return $?
+}
 
-curl -sL https://deb.nodesource.com/setup_15.x | bash -
-sudo apt install nodejs
 
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+# @param $1 command 
+# @param $2 package name 
+try_install() {
+	log "Checking $@"
+	command -v $1
+	
+	if [ $? -ne 0 ]
+	then
+		echo "'$1' is not installed. Installing now..."
 
-sudo apt update
-sudo apt install yarn
+		if [ -z "$2" ]
+		then 
+			sudo apt install $1 -y
+		else
+			sudo apt install $2 -y
+		fi 
+		
+		if [ $? -ne 0 ]
+		then
+			log "[\033[1;31mWARNING]\033[00m]: Unable to install '$1'"
+		fi
+	else
+		echo "'$1' is already installed. Skipping..."
+	fi
 
-command -v nvim
+	return $?
+}
 
-if [ $? -ne 0 ]
-then
-    nvim_file=nvim.appimage
-    nvim_dir=/opt/neovim
-    
-    wget https://github.com/neovim/neovim/releases/download/nightly/$nvim_file
-    
-    chmod +x $nvim_file
-    ./$nvim_file --appimage-extract
-    
-    sudo mv squashfs-root $nvim_dir
-    sudo update-alternatives --install /usr/bin/nvim nvim $nvim_dir/AppRun 30
+install_neovim() {
+	command -v nvim
 
-    rm $nvim_file
+	if [ $? -ne 0 ]
+	then
+	    nvim_file=nvim.appimage
+	    nvim_dir=/opt/neovim
+	    
+	    wget https://github.com/neovim/neovim/releases/download/nightly/$nvim_file
+	    
+	    chmod +x $nvim_file
+	    ./$nvim_file --appimage-extract
+	    
+	    sudo mv squashfs-root $nvim_dir
+	    sudo update-alternatives --install /usr/bin/nvim nvim $nvim_dir/AppRun 30
 
-    command -v ripgrep
+	    rm $nvim_file
 
-    if [ $? -ne 0 ]
-    then
-        sudo apt install ripgrep -y
-    fi
+	    /usr/bin/nvim +PlugInstall +qall
+	fi
+}
 
-    nvim +PlugInstall +qall
-fi
+install_pynvim() {
+	try_install python3
+	try_install pip3 python3-pip
 
+	if [ $? -ne 0 ]
+	then	
+		log "[\033[1;31mWARNING]\033[00m]: Unable to install 'python3-pip'"
+	else
+		pip3 install --upgrade pynvim
+	fi
+
+	return $?
+}
+
+log() {
+	printf $@
+	datetime=$(date '+%Y-%m-%d %H:%M:%S')
+	echo [$datetime] $@ >> $LOG_FILE
+}
+
+require() {
+	try_install $@
+	
+	if [ $? -ne 0 ]
+	then
+		echo "Unable to install '$1'"
+		exit
+	fi
+}
+
+try_install tmux
+require curl
+require yarn yarnpkg
+install_pynvim
+download_config
+install_neovim
+try_install ripgrep
 echo "Script finished."
-rm rcinstall
