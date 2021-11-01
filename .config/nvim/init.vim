@@ -131,7 +131,8 @@ nmap <A-5> 5gt
 " nnoremap <Tab> gt
 
 " FZF
-nmap <C-Space> :Files<CR>
+nmap <C-Space> :Buffers<CR>
+nmap <C-\> :Files<CR>
 
 " NERDTree
 map <expr><F7> expand('%') =~ "^NERD" ? "" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
