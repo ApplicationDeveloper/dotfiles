@@ -95,6 +95,7 @@ require() {
 }
 
 try_install tmux
+try_install xclip
 require curl
 require yarn yarnpkg
 install_pynvim
