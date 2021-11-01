@@ -8,12 +8,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'morhetz/gruvbox'
 Plug 'psliwka/vim-smoothie'
+Plug 'puremourning/vimspector'
 " if has('nvim')
 "     Plug 'tadaa/vimade' " Breaks fzf on Vim
 " endif
 call plug#end()
 
 syntax enable
+
+let g:vimspector_enable_mappings = 'HUMAN'
 
 " set cursorline
 " set cursorcolumn
