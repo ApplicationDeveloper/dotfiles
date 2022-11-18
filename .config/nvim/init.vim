@@ -6,7 +6,9 @@ Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'morhetz/gruvbox'
+Plug 'sainnhe/everforest'
+" Plug 'morhetz/gruvbox'
+" Plug 'iandwelker/rose-pine-vim'
 " Plug 'psliwka/vim-smoothie'
 Plug 'puremourning/vimspector'
 " if has('nvim')
@@ -14,13 +16,17 @@ Plug 'puremourning/vimspector'
 " endif
 call plug#end()
 
+" TODO :install rose-pine theme
 syntax enable
 
 let g:vimspector_enable_mappings = 'HUMAN'
 
+let g:everforest_background = 'hard'
+let g:everforest_better_performance = 1
+
 set cursorline
 " set cursorcolumn
-" set termguicolors
+set termguicolors
 set autoindent
 set autoread
 set backupdir=/tmp//,. " Set swap files directory
@@ -74,7 +80,8 @@ let g:gruvbox_contrast_dark="soft"
 let g:gruvbox_bold=1
 let g:gruvbox_italic=1
 " let g:gruvbox_contrast_light="hard"
-colorscheme gruvbox
+" colorscheme gruvbox
+colorscheme everforest
 
 
 " Vimade Configurations
@@ -134,7 +141,8 @@ nmap <A-5> 5gt
 
 " FZF
 nmap <C-Space> :Buffers<CR>
-nmap <C-\> :Files<CR>
+nmap <C-\> :GFiles<CR>
+nmap <C-P> :Files<CR>
 
 " NERDTree
 map <expr><F7> expand('%') =~ "^NERD" ? "" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
@@ -151,6 +159,11 @@ inoremap <silent><expr> <TAB>
       \ "\<Tab>" 
  "     \ CheckBackspace() ? coc#refresh() :
 " inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -317,12 +330,13 @@ highlight clear SignColumn
 " highlight StatusLine cterm=underline ctermfg=241
 " highlight LineNr ctermfg=8
 highlight MatchParen ctermfg=197 ctermbg=None
-highlight Normal ctermbg=None
-" highlight NormalNC ctermfg=Gray
-highlight NonText ctermbg=None
-highlight CursorLineNr ctermbg=None
+" highlight Normal ctermbg=black
+highlight Normal guibg=#24302a
+highlight EndOfBuffer guibg=#24302a
+" highlight NonText ctermbg=None
+highlight CursorLine guibg=#201f20
 highlight LineNr ctermbg=None
 " highlight Visual cterm=None
 " highlight Pmenu ctermbg=Green
 " highlight Todo cterm=underline ctermfg=Green
-highlight EndOfBuffer cterm=None ctermfg=235 ctermbg=None
+" highlight EndOfBuffer cterm=None ctermfg=235 ctermbg=None
