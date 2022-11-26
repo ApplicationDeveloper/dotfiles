@@ -1,0 +1,5 @@
+{
+    "intelephense.client.disableAddIskeyword": true,
+     "coc.preferences.formatOnSaveFiletypes": ["vue"],
+     "prettier.semi": false
+}
