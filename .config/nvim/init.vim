@@ -32,7 +32,7 @@ set autoread
 set backupdir=/tmp//,. " Set swap files directory
 set directory=/tmp//,.
 set encoding=UTF-8
-set background=dark
+set background=light
 " set fillchars+=vert:\ "█ Remove vertical split border/line
 set guicursor=
 set nohlsearch
@@ -100,8 +100,8 @@ let g:fzf_colors = {
             \ 'gutter': ['bg', 'Normal']
             \}
 let g:fzf_layout = { 'window': { 'width': 0.92, 'height': 0.8, 'border': 'sharp' } }
-let g:fzf_preview_window = 'down:80%:border:sharp'
-let $FZF_DEFAULT_COMMAND='rg --files'
+let g:fzf_preview_window = 'right:50%:border:sharp'
+let $FZF_DEFAULT_COMMAND='rg --files --no-ignore'
 " let $FZF_DEFAULT_COMMAND='fdfind --type file --follow --hidden --exclude .git --color=always'
 let $FZF_DEFAULT_OPTS='--layout=reverse'
 
@@ -296,10 +296,10 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=
 " command! -bang -nargs=? -complete=dir Files
 "             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('down:80%'), <bang>0)
 command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview-window', 'down:80%:border:sharp', '--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview-window', 'left:50%:border:sharp', '--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
 command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --hidden --line-number --color=always --no-ignore '.shellescape(<q-args>).'| tr -d "\017"', 
             \ 0, 
-            \ fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'down:80%', '?'),
+            \ fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'left:50%', '?'),
             \ <bang>0)
 
 " " Open NERDTree on startup
@@ -331,10 +331,12 @@ highlight clear SignColumn
 " highlight LineNr ctermfg=8
 highlight MatchParen ctermfg=197 ctermbg=None
 " highlight Normal ctermbg=black
-highlight Normal guibg=#24302a
-highlight EndOfBuffer guibg=#24302a
+" highlight Normal guibg=#24302a
+highlight Normal guibg=white guifg=black
+highlight EndOfBuffer guibg=white guifg=black
+" highlight EndOfBuffer guibg=#24302a
 " highlight NonText ctermbg=None
-highlight CursorLine guibg=#201f20
+" highlight CursorLine guibg=#201f20
 highlight LineNr ctermbg=None
 " highlight Visual cterm=None
 " highlight Pmenu ctermbg=Green
