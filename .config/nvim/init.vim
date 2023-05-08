@@ -8,7 +8,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'sainnhe/everforest'
 " Plug 'morhetz/gruvbox'
-" Plug 'iandwelker/rose-pine-vim'
+Plug 'rose-pine/neovim'
 " Plug 'psliwka/vim-smoothie'
 Plug 'puremourning/vimspector'
 " if has('nvim')
@@ -19,11 +19,15 @@ call plug#end()
 " TODO :install rose-pine theme
 syntax enable
 
+let g:neovide_cursor_trail_size = 0
+" let g:neovide_cursor_vfx_mode = "sonicboom"
+
 let g:vimspector_enable_mappings = 'HUMAN'
 
-let g:everforest_background = 'hard'
+let g:everforest_background = 'soft'
 let g:everforest_better_performance = 1
 
+set guifont=Noto\ Sans\ Mono:h16
 set cursorline
 " set cursorcolumn
 set termguicolors
@@ -32,7 +36,7 @@ set autoread
 set backupdir=/tmp//,. " Set swap files directory
 set directory=/tmp//,.
 set encoding=UTF-8
-set background=light
+set background=dark
 " set fillchars+=vert:\ "█ Remove vertical split border/line
 set guicursor=
 set nohlsearch
@@ -46,8 +50,8 @@ set showcmd
 set softtabstop=4 shiftwidth=4 expandtab
 set title
 
-set relativenumber 
-set number
+" set relativenumber 
+" set number
 
 if !has('nvim')
     set clipboard=exclude:.* " Don't connect to X display
@@ -81,7 +85,7 @@ let g:gruvbox_bold=1
 let g:gruvbox_italic=1
 " let g:gruvbox_contrast_light="hard"
 " colorscheme gruvbox
-colorscheme everforest
+colorscheme rose-pine-moon
 
 
 " Vimade Configurations
@@ -288,6 +292,15 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+nnoremap <silent><nowait> <space>d  :call CocAction('jumpDefinition', v:false)<CR>
+
+" ==== Vimspector ====
+" for normal mode - the word under the cursor
+nmap <Leader>di <Plug>VimspectorBalloonEval
+" for visual mode, the visually selected text
+xmap <Leader>di <Plug>VimspectorBalloonEval
+nmap <Leader>db <Plug>VimspectorBreakpoints
+
 " === Commands ===
 " Disable auto comment 
 "
@@ -297,7 +310,11 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=
 "             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('down:80%'), <bang>0)
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview-window', 'left:50%:border:sharp', '--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
-command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --hidden --line-number --color=always --no-ignore '.shellescape(<q-args>).'| tr -d "\017"', 
+command! -bang -nargs=* Rg call fzf#vim#grep('rg --column --hidden --line-number --color=always '.shellescape(<q-args>).'| tr -d "\017"', 
+            \ 0, 
+            \ fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'left:50%', '?'),
+            \ <bang>0)
+command! -bang -nargs=* Rgx call fzf#vim#grep('rg --column --hidden --line-number --color=always --no-ignore '.shellescape(<q-args>).'| tr -d "\017"', 
             \ 0, 
             \ fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'left:50%', '?'),
             \ <bang>0)
@@ -332,8 +349,8 @@ highlight clear SignColumn
 highlight MatchParen ctermfg=197 ctermbg=None
 " highlight Normal ctermbg=black
 " highlight Normal guibg=#24302a
-highlight Normal guibg=white guifg=black
-highlight EndOfBuffer guibg=white guifg=black
+" highlight Normal guibg=white guifg=black
+" highlight EndOfBuffer guibg=white guifg=black
 " highlight EndOfBuffer guibg=#24302a
 " highlight NonText ctermbg=None
 " highlight CursorLine guibg=#201f20
