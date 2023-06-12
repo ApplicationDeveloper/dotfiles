@@ -1,6 +1,7 @@
 call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } 
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'} 
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
@@ -11,6 +12,8 @@ Plug 'sainnhe/everforest'
 Plug 'rose-pine/neovim'
 " Plug 'psliwka/vim-smoothie'
 Plug 'puremourning/vimspector'
+Plug 'daschw/leaf.nvim'
+Plug 'CreaturePhil/vim-handmade-hero'
 " if has('nvim')
 "     Plug 'tadaa/vimade' " Breaks fzf on Vim
 " endif
@@ -24,7 +27,7 @@ let g:neovide_cursor_trail_size = 0
 
 let g:vimspector_enable_mappings = 'HUMAN'
 
-let g:everforest_background = 'soft'
+let g:everforest_background = 'medium'
 let g:everforest_better_performance = 1
 
 set guifont=Noto\ Sans\ Mono:h16
@@ -36,7 +39,7 @@ set autoread
 set backupdir=/tmp//,. " Set swap files directory
 set directory=/tmp//,.
 set encoding=UTF-8
-set background=dark
+set background=light
 " set fillchars+=vert:\ "█ Remove vertical split border/line
 set guicursor=
 set nohlsearch
@@ -50,8 +53,8 @@ set showcmd
 set softtabstop=4 shiftwidth=4 expandtab
 set title
 
-" set relativenumber 
-" set number
+set relativenumber 
+set number
 
 if !has('nvim')
     set clipboard=exclude:.* " Don't connect to X display
@@ -85,7 +88,10 @@ let g:gruvbox_bold=1
 let g:gruvbox_italic=1
 " let g:gruvbox_contrast_light="hard"
 " colorscheme gruvbox
-colorscheme rose-pine-moon
+" colorscheme rose-pine-moon
+" colorscheme leaf
+" colorscheme handmade-hero
+" colorscheme everforest
 
 
 " Vimade Configurations
@@ -103,8 +109,8 @@ let g:fzf_colors = {
             \ 'border': ['fg', 'Title'],
             \ 'gutter': ['bg', 'Normal']
             \}
-let g:fzf_layout = { 'window': { 'width': 0.92, 'height': 0.8, 'border': 'sharp' } }
-let g:fzf_preview_window = 'right:50%:border:sharp'
+let g:fzf_layout = { 'window': { 'width': 0.92, 'height': 0.8, 'border': 'rounded' } }
+let g:fzf_preview_window = 'right:50%:border:rounded'
 let $FZF_DEFAULT_COMMAND='rg --files --no-ignore'
 " let $FZF_DEFAULT_COMMAND='fdfind --type file --follow --hidden --exclude .git --color=always'
 let $FZF_DEFAULT_OPTS='--layout=reverse'
@@ -346,15 +352,21 @@ highlight clear SignColumn
 " highlight StatusLineNC cterm=underline ctermfg=241 
 " highlight StatusLine cterm=underline ctermfg=241
 " highlight LineNr ctermfg=8
-highlight MatchParen ctermfg=197 ctermbg=None
+" highlight MatchParen ctermfg=197 ctermbg=None
 " highlight Normal ctermbg=black
 " highlight Normal guibg=#24302a
-" highlight Normal guibg=white guifg=black
+" highlight Normal guibg=#0c0c0c
+highlight Normal guibg=white guifg=black
 " highlight EndOfBuffer guibg=white guifg=black
 " highlight EndOfBuffer guibg=#24302a
 " highlight NonText ctermbg=None
-" highlight CursorLine guibg=#201f20
-highlight LineNr ctermbg=None
+highlight CursorLine guibg=None
+" highlight StatusLine guibg=None
+highlight LineNr ctermbg=None guifg=#7F7F7F
+highlight StatusLine cterm=None  gui=None guibg=#BFBFBF guifg=black
+highlight Constant guifg=#A0522D
+highlight NormalNC       guibg=None
+highlight StatusLineNC   cterm=None  gui=None guibg=#e5e5e5 guifg=#333333 
 " highlight Visual cterm=None
 " highlight Pmenu ctermbg=Green
 " highlight Todo cterm=underline ctermfg=Green
